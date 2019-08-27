@@ -22,7 +22,7 @@ date: "2019-06-21"
 
 ## useData ?
 
-```jsx
+```js
 function useData(dataLoader, params) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
