@@ -47,7 +47,7 @@ function Home() {
         <Particles
           params={particlesConfig}
           height={height}
-          style={{ display: "block" }}
+          style={{ display: "block", transform: "translateZ(-600px)" }}
         />
         <div className="content">
           <SpringCard />
