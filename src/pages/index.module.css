@@ -1,0 +1,24 @@
+:global(*) {
+  box-sizing: border-box;
+}
+
+:global(html) {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: "avenir next", avenir, -apple-system, BlinkMacSystemFont,
+    "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
+    sans-serif;
+  overflow: hidden;
+}
+
+:global(body) {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  position: relative;
+  background-color: #1e282f;
+}
