@@ -5,24 +5,32 @@ import particlesConfig from "../utils/particlesConfig"
 import SpringCard from "../components/springCard"
 
 function Home() {
+  const [height, setHeight] = React.useState();
+  
+  React.useEffect(() => {
+    if (window) {
+      setHeight(window.innerHeight);
+    }
+  }, [])
+  
   return (
     <>
       <style>
         {`
-* {
-  box-sizing: border-box;
-}
+          * {
+            box-sizing: border-box;
+          }
 
-html,
-body {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  font-family: 'avenir next', avenir, -apple-system, BlinkMacSystemFont, 'helvetica neue', helvetica,
-    ubuntu, roboto, noto, 'segoe ui', arial, sans-serif;
-  overflow: hidden;
-}
-`}
+          html,
+          body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            font-family: 'avenir next', avenir, -apple-system, BlinkMacSystemFont, 'helvetica neue', helvetica,
+              ubuntu, roboto, noto, 'segoe ui', arial, sans-serif;
+            overflow: hidden;
+          }
+        `}
       </style>
       <div
         style={{
@@ -38,7 +46,7 @@ body {
       >
         <Particles
           params={particlesConfig}
-          height={window.innerHeight}
+          height={height}
           style={{ display: "block" }}
         />
         <div className="content">
