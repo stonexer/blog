@@ -5,7 +5,7 @@ import particlesConfig from "../utils/particlesConfig"
 import SpringCard from "../components/springCard"
 
 function Home() {
-  const [height, setHeight] = React.useState();
+  const [height, setHeight] = React.useState(1000);
   
   React.useEffect(() => {
     if (window) {
