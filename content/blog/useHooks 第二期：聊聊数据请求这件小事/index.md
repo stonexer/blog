@@ -1,6 +1,7 @@
 ---
-title: react hooks 第二期：聊聊数据请求这件小事
+title: useHooks 第二期：聊聊数据请求这件小事
 date: "2019-06-21"
+description: 距离上一篇讨论 hooks 的文章已经过了半年了，因为越使用就越发现这个坑不浅。就连发请求这件最简单的事情，我都很难讲清楚为什么要使用 hooks。关于 React Hooks 也看了不少文章，但是始终没找到关于"最简单"的 CRUD 日常实践。所以这期我就抛砖迎玉，说说我目前的粗浅理解。
 ---
 
 ![useHook2](useHook2.png)

@@ -1,8 +1,11 @@
+:global * {
+  font-family: "avenir next", avenir, -apple-system, BlinkMacSystemFont,
+    "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
+    sans-serif !important;
+}
+
 .container {
   position: relative;
   overflow: hidden;
   background-color: #1e282f;
-  font-family: "avenir next", avenir, -apple-system, BlinkMacSystemFont,
-    "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
-    sans-serif;
 }
