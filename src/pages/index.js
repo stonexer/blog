@@ -7,7 +7,7 @@ import SpringCard from "../components/springCard"
 import * as styles from "./index.module.css"
 
 function Home() {
-  const [height, setHeight] = React.useState(1000)
+  const [height, setHeight] = React.useState(2000)
 
   React.useEffect(() => {
     if (window) {
@@ -17,6 +17,14 @@ function Home() {
 
   return (
     <div className={styles.container}>
+      <style>
+        {`
+          html, body {
+            height: 100%;
+            overflow: hidden;
+          }
+        `}
+      </style>
       <Particles
         params={particlesConfig}
         height={height}
