@@ -8,6 +8,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@deckdeckgo/highlight-code": "^3.3.1",
     "gatsby": "^3.13.0",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-feed": "^3.13.0",
@@ -18,6 +19,7 @@
     "gatsby-plugin-sharp": "^3.13.0",
     "gatsby-plugin-typography": "^3.13.0",
     "gatsby-remark-copy-linked-files": "^4.10.0",
+    "gatsby-remark-highlight-code": "^3.0.1",
     "gatsby-remark-images": "^5.10.0",
     "gatsby-remark-prismjs": "^5.10.0",
     "gatsby-remark-responsive-iframe": "^4.10.0",
@@ -39,6 +41,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
+    "eslint-config-react-app": "^6.0.0",
     "prettier": "^2.4.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",

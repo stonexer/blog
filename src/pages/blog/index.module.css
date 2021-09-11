@@ -1,0 +1,37 @@
+.post {
+  margin-top: 36px;
+  display: flex;
+}
+
+.post aside {
+  flex: 1;
+  font-weight: bold;
+}
+
+.post content {
+  flex: 3;
+}
+
+.postTitle {
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.postTitle a {
+  font-weight: bold;
+  box-shadow: none;
+  color: #121212;
+}
+
+.postTitle a:hover {
+  text-decoration: underline;
+}
+
+.postDescription {
+  position: relative;
+  margin: 0;
+  font-size: 14px;
+  line-height: 24px;
+  height: calc(4 * 24px);
+  overflow: hidden;
+}

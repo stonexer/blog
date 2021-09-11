@@ -1,17 +1,17 @@
-import React from "react"
-import { Link } from "gatsby"
-import { useSpring, animated } from "react-spring"
+import React from "react";
+import { Link } from "gatsby";
+import { useSpring, animated } from "react-spring";
 
-import * as styles from "./index.module.css"
+import * as styles from "./index.module.css";
 
 function SpringCard() {
   // We add this ref to card element and use in onMouseMove event ...
   // ... to get element's offset and dimensions.
-  const ref = React.useRef()
+  const ref = React.useRef();
 
   // Keep track of whether card is hovered so we can increment ...
   // ... zIndex to ensure it shows up above other cards when animation causes overlap.
-  const [isHovered, setHovered] = React.useState(false)
+  const [isHovered, setHovered] = React.useState(false);
 
   const [animatedProps, setAnimatedProps] = useSpring(() => ({
     // Array containing [rotateX, rotateY, and scale] values.
@@ -21,7 +21,7 @@ function SpringCard() {
     xys: [0, 0, 1],
     // Setup physics
     config: { mass: 10, tension: 400, friction: 30, precision: 0.001 },
-  }))
+  }));
 
   return (
     <animated.div
@@ -33,29 +33,29 @@ function SpringCard() {
         const x =
           clientX -
           (ref.current.offsetLeft -
-            (window.scrollX || window.pageXOffset || document.body.scrollLeft))
+            (window.scrollX || window.pageXOffset || document.body.scrollLeft));
 
         // Get mouse y position within card
         const y =
           clientY -
           (ref.current.offsetTop -
-            (window.scrollY || window.pageYOffset || document.body.scrollTop))
+            (window.scrollY || window.pageYOffset || document.body.scrollTop));
 
         // Set animated values based on mouse position and card dimensions
-        const dampen = 16 // Lower the number the less rotation
+        const dampen = 16; // Lower the number the less rotation
         const xys = [
           -(y - ref.current.clientHeight / 2) / dampen, // rotateX
           (x - ref.current.clientWidth / 2) / dampen, // rotateY
           1.2, // Scale
-        ]
+        ];
 
         // Update values to animate to
-        setAnimatedProps({ xys: xys })
+        setAnimatedProps({ xys: xys });
       }}
       onMouseLeave={() => {
-        setHovered(false)
+        setHovered(false);
         // Set xys back to original
-        setAnimatedProps({ xys: [0, 0, 1] })
+        setAnimatedProps({ xys: [0, 0, 1] });
       }}
       style={{
         // If hovered we want it to overlap other cards when it scales up
@@ -76,7 +76,7 @@ function SpringCard() {
         <a href="https://github.com/stonexer">Github</a>
       </div>
     </animated.div>
-  )
+  );
 }
 
-export default SpringCard
+export default SpringCard;

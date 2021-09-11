@@ -1,0 +1,81 @@
+a {
+  color: #121212;
+}
+
+deckgo-highlight-code {
+  margin-bottom: 48px;
+}
+
+.pageHeader {
+  padding-bottom: 140px;
+}
+
+.pageHeader.root {
+  color: #fff;
+  background: #121212;
+}
+
+.pageHeader.root svg {
+  color: #fff;
+}
+
+.gt {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.one {
+  opacity: 0.8;
+}
+
+.underline {
+  animation-name: underscore;
+  animation-iteration-count: infinite;
+  animation-duration: 2000ms;
+  animation-timing-function: step-start;
+}
+
+@keyframes underscore {
+  0% {
+    color: #000;
+  }
+  50% {
+    color: #fff;
+  }
+  100% {
+    color: #000;
+  }
+}
+
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.navBar svg {
+  width: 32px;
+  height: 32px;
+  margin-left: 12px;
+}
+
+.pageHeader h1 {
+  margin: 0;
+  padding: 24px 0;
+}
+
+.pageHeader a {
+  box-shadow: none;
+  color: #121212;
+}
+
+.pageHeader.root a {
+  color: #fff;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+}

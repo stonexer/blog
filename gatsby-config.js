@@ -1,11 +1,11 @@
 module.exports = {
   siteMetadata: {
-    title: `Yet Another Blog`,
+    title: `SToneX`,
     author: `SToneX`,
-    description: `11`,
+    description: `yet another program's blog`,
     siteUrl: `https://www.sitixi.com/`,
     social: {
-      twitter: `stonexer`,
+      twitter: `TianxinShi`,
     },
   },
   plugins: [
@@ -27,17 +27,9 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          { resolve: `gatsby-remark-images` },
           {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 590,
-            },
-          },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
-            },
+            resolve: `gatsby-remark-highlight-code`,
           },
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
@@ -75,4 +67,4 @@ module.exports = {
       },
     },
   ],
-}
+};

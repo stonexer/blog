@@ -1,6 +1,7 @@
 import React from "react"
 import Particles from "react-particles-js"
 
+import SEO from "../components/seo"
 import particlesConfig from "../utils/particlesConfig"
 import SpringCard from "../components/springCard"
 
@@ -17,6 +18,7 @@ function Home() {
 
   return (
     <div className={styles.container}>
+      <SEO title="SToneX" />
       <style>
         {`
           html, body {

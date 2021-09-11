@@ -1,6 +1,6 @@
 ---
-title: useHooks() 第一期：聊聊 useCallback
-date: "2019-02-13"
+title: useHooks(1) 聊聊 useCallback
+date: '2019-02-13'
 description: 第一期我想先从 `useCallback` 聊起，因为它不影响我们的代码逻辑，主要面向于对性能要求较高或者有强迫症的同学。而这个看上去挺简单的 hook 里，其实藏着很多有意思的东西。
 ---
 
@@ -19,12 +19,12 @@ description: 第一期我想先从 `useCallback` 聊起，因为它不影响我�
 ```js
 function A() {
   // ...
-  const cb = () => {} /* 创建了 */
+  const cb = () => {}; /* 创建了 */
 }
 
 function B() {
   // ...
-  const cb = React.useCallback(() => {} /* 还是创建了 */, [a, b])
+  const cb = React.useCallback(() => {} /* 还是创建了 */, [a, b]);
 }
 ```
 
@@ -35,24 +35,21 @@ function B() {
 ```js
 class SomeComponent extends React.PureComponent {
   render() {
-    const {
-      list,
-      thingsNeedToUseInCallbackButDoNotNeedInChild,
-      onChange,
-    } = this.props
+    const { list, thingsNeedToUseInCallbackButDoNotNeedInChild, onChange } =
+      this.props;
 
     return (
       <ul>
-        {list.map(item => (
+        {list.map((item) => (
           <Item
             key={item.key}
             onClick={() => {
-              onChange(item, thingsNeedToUseInCallbackButDoNotNeedInChild)
+              onChange(item, thingsNeedToUseInCallbackButDoNotNeedInChild);
             }}
           />
         ))}
       </ul>
-    )
+    );
   }
 }
 ```
@@ -62,32 +59,30 @@ class SomeComponent extends React.PureComponent {
 沿用 `useCallback` 的思路，其实这里我们也可以对 callback 进行自定义的 `memoize`:
 
 ```js
-import { memoize } from "decko"
+import { memoize } from 'decko';
 
 class SomeComponent extends React.PureComponent {
   @memoize
   getItemChangeHandler = (key, item) => {
-    const {
-      thingsNeedToUseInCallbackButDoNotNeedInChild,
-      onChange,
-    } = this.props
+    const { thingsNeedToUseInCallbackButDoNotNeedInChild, onChange } =
+      this.props;
 
-    onChange(item, thingsNeedToUseInCallbackButDoNotNeedInChild)
-  }
+    onChange(item, thingsNeedToUseInCallbackButDoNotNeedInChild);
+  };
 
   render() {
-    const { list } = this.props
+    const { list } = this.props;
 
     return (
       <ul>
-        {list.map(item => (
+        {list.map((item) => (
           <Item
             key={item.key}
             onClick={this.getItemChangeHandler(item.key, item)}
           />
         ))}
       </ul>
-    )
+    );
   }
 }
 ```
@@ -100,18 +95,18 @@ class SomeComponent extends React.PureComponent {
 
 ```js
 function Form() {
-  const [text, updateText] = useState("")
+  const [text, updateText] = useState('');
 
   const handleSubmit = useCallback(() => {
-    console.log(text)
-  }, [text]) // 每次 text 变化时 handleSubmit 都会变
+    console.log(text);
+  }, [text]); // 每次 text 变化时 handleSubmit 都会变
 
   return (
     <>
-      <input value={text} onChange={e => updateText(e.target.value)} />
+      <input value={text} onChange={(e) => updateText(e.target.value)} />
       <ExpensiveTree onSubmit={handleSubmit} /> // 很重的组件，不优化会死的那种
     </>
-  )
+  );
 }
 ```
 
@@ -119,24 +114,24 @@ function Form() {
 
 ```js
 function Form() {
-  const [text, updateText] = useState("")
-  const textRef = useRef()
+  const [text, updateText] = useState('');
+  const textRef = useRef();
 
   useLayoutEffect(() => {
-    textRef.current = text // 将 text 写入到 ref
-  })
+    textRef.current = text; // 将 text 写入到 ref
+  });
 
   const handleSubmit = useCallback(() => {
-    const currentText = textRef.current // 从 ref 中读取 text
-    alert(currentText)
-  }, [textRef]) // handleSubmit 只会依赖 textRef 的变化。不会在 text 改变时更新
+    const currentText = textRef.current; // 从 ref 中读取 text
+    alert(currentText);
+  }, [textRef]); // handleSubmit 只会依赖 textRef 的变化。不会在 text 改变时更新
 
   return (
     <>
-      <input value={text} onChange={e => updateText(e.target.value)} />
+      <input value={text} onChange={(e) => updateText(e.target.value)} />
       <ExpensiveTree onSubmit={handleSubmit} />
     </>
-  )
+  );
 }
 ```
 
@@ -151,13 +146,18 @@ function Form() {
 
 ```js
 function useCallback(callback) {
-  const callbackHolder = useRef()
+  const callbackHolder = useRef();
 
   useLayoutEffect(() => {
-    callbackHolder.current = fn
-  })
+    callbackHolder.current = fn;
+  });
 
-  return useMemo(() => (...args) => (0, ref.current)(...args), [])
+  return useMemo(
+    () =>
+      (...args) =>
+        (0, ref.current)(...args),
+    []
+  );
 }
 ```
 
@@ -172,17 +172,17 @@ function useCallback(callback) {
 因为以上提到的种种原因，目前最佳的解法其实是使用 `useReducer`。因为 `reducer` 其实是在下次 `render` 时才执行的，所以在 `reducer` 里，访问到的永远是新的 `props` 和 `state`。
 
 ```js
-const TodosDispatch = React.createContext(null)
+const TodosDispatch = React.createContext(null);
 
 function TodosApp() {
   // Tip: `dispatch` 不会在多次渲染时改变
-  const [todos, dispatch] = useReducer(todosReducer)
+  const [todos, dispatch] = useReducer(todosReducer);
 
   return (
     <TodosDispatch.Provider value={dispatch}>
       <DeepTree todos={todos} />
     </TodosDispatch.Provider>
-  )
+  );
 }
 ```
 
