@@ -75,7 +75,7 @@ h1 {
 }
 
 .one {
-  opacity: 0.4;
+  color: rgba(255, 255, 255, 0.48);
 }
 
 .pages {
@@ -89,9 +89,9 @@ h1 {
   text-decoration: none;
   transition: color 0.2s ease;
   box-shadow: none;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.64);
 }
 
 a:hover {
-  color: #999;
+  color: rgba(255, 255, 255, 0.8);
 }

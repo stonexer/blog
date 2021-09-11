@@ -72,7 +72,7 @@ function SpringCard() {
         ST<span className={styles.one}>one</span>X
       </h1>
       <div className={styles.pages}>
-        <Link to="./blog">Blog</Link>
+        <Link to="/blog">Blog</Link>
         <a href="https://github.com/stonexer">Github</a>
       </div>
     </animated.div>
