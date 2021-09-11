@@ -1,6 +1,13 @@
 .post {
   margin-top: 36px;
   display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 801px) {
+  .post {
+    flex-direction: row;
+  }
 }
 
 .post aside {

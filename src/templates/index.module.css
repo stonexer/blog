@@ -1,12 +1,20 @@
-.header h1 {
-  font-size: 64px;
-  line-height: 64px;
-  font-weight: bold;
-}
-
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   list-style: none;
+}
+
+.header h1 {
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: bold;
+}
+
+@media only screen and (min-width: 801px) {
+  .header h1 {
+    font-size: 64px;
+    line-height: 64px;
+    font-weight: bold;
+  }
 }

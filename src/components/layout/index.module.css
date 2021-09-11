@@ -51,6 +51,7 @@ deckgo-highlight-code {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: calc(100% - 48px);
   max-width: 900px;
   margin: 0 auto;
 }
@@ -76,6 +77,7 @@ deckgo-highlight-code {
 }
 
 main {
+  width: calc(100% - 48px);
   max-width: 900px;
   margin: 0 auto;
 }
