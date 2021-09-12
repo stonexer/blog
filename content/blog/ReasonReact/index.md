@@ -1,10 +1,8 @@
 ---
 title: 从 React 到 Reason
-date: "2018-01-01"
+date: '2018-01-01'
 description: 如果你是一个 React 爱好者，开始在各种站点听到有人谈论 Reason 这个新语言，也看见 [Jordan](https://github.com/jordwalke)（React 作者）说 ReasonReact 将是未来，但你却是不知道从哪下手，那么这篇小教程就是为你准备的。
 ---
-
-![ReasonReact](http://7xr8pm.com1.z0.glb.clouddn.com/ReasonReact.png)
 
 > 如果你是一个 React 爱好者，开始在各种站点听到有人谈论 Reason 这个新语言，也看见 [Jordan](https://github.com/jordwalke)（React 作者）说 ReasonReact 将是未来，但你却是不知道从哪下手，那么这篇小教程就是为你准备的。
 
@@ -129,22 +127,22 @@ lib
 以及 `webpack.config.js`
 
 ```javascript
-const path = require("path")
+const path = require('path');
 
 module.exports = {
-  entry: "./lib/js/src/Main.js",
+  entry: './lib/js/src/Main.js',
   output: {
-    path: path.join(__dirname, "public"),
-    filename: "bundle.js",
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js',
   },
-}
+};
 ```
 
 Webpacck 配置里入口是 bsb 编译生成的 './lib/js/src/Main.js'。再打开一个终端运行 `npm run build`，我们的准备工作就全部就绪了。我们只利用 webpack 做很简单的打包，所以你基本可以忽略这个终端的输出，还是把精力放在刚刚的 start 命令上。接下来直接在浏览器里打开 index.html 文件，就可以看到 “Hello ReasonReact” 了~
 
 ## 第一个组件
 
-![](http://7xr8pm.com1.z0.glb.clouddn.com/Stepper.jpg)
+![stepper](./Stepper.jpg)
 
 让我们开始第一个组件的开发，一个只能加加减减的步进器。新建一个组件文件：`src/Stepper.re`
 
@@ -173,9 +171,9 @@ ReactDOMRe.renderToElementWithId(<Stepper />, "root");
 熟悉 ReactJS 的同学都应该知道，jsx 并不是什么特殊的语法，只是会被编译成普通的函数调用，比如
 
 ```jsx
-;<div>Hello React</div>
+<div>Hello React</div>;
 // to
-React.createElement("div", null, "Hello React")
+React.createElement('div', null, 'Hello React');
 ```
 
 而在 ReasonReact 中，jsx 会被翻译成

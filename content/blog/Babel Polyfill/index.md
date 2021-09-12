@@ -1,10 +1,10 @@
 ---
 title: 21 分钟精通前端 Polyfill
-date: "2017-07-08"
+date: '2017-07-08'
 description: 今天是 2017 年 7 月 7 日，es2015 正式发布已经两年了。但最新的浏览器们逼近 100% 的支持率对我们好像并没有什么卵用，为了少数用户的体验，我们很可能需要兼容 IE9。感谢 babel 的编译，让我们完美的提前使用上了 const，let 和 arrow function。可也许你还是面对着不敢直接使用 `fetch` 或是 `Object.assign` 的难题？了。
 ---
 
-![dataTable](http://www.sitixi.com/blog/media/14994835126345/dataTable.png)
+![dataTable](./dataTable.png)
 
 今天是 2017 年 7 月 7 日，es2015 正式发布已经两年了。但最新的浏览器们逼近 100% 的支持率对我们好像并没有什么卵用，为了少数用户的体验，我们很可能需要兼容 IE9。感谢 babel 的编译，让我们完美的提前使用上了 const，let 和 arrow function。可也许你还是面对着不敢直接使用 `fetch` 或是 `Object.assign` 的难题？
 
@@ -14,8 +14,8 @@ description: 今天是 2017 年 7 月 7 日，es2015 正式发布已经两年了
 
 ```javascript
 const foo = (a, b) => {
-  return Object.assign(a, b)
-}
+  return Object.assign(a, b);
+};
 ```
 
 当我们写出上面这样的代码，交给 babel 编译时，我们得到了：
@@ -49,33 +49,33 @@ yarn add babel-plugin-transform-object-assign
 ```javascript
 var _extends =
   Object.assign ||
-  function(target) {
+  function (target) {
     for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i]
+      var source = arguments[i];
       for (var key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key]
+          target[key] = source[key];
         }
       }
     }
-    return target
-  }
+    return target;
+  };
 
 var foo = (exports.foo = function foo(a, b) {
-  return _extends(a, b)
-})
+  return _extends(a, b);
+});
 ```
 
 babel-plugin-transform-object-assign 在 module 之前替换了我们用到的 Object.assign 方法。看上去效果不错，但细细考究一下会发现这样的问题：
 
 ```javascript
 // another.js
-export const bar = (a, b) => Object.assign(a, b)
+export const bar = (a, b) => Object.assign(a, b);
 
 // index.js
-import { bar } from "./another"
+import { bar } from './another';
 
-export const foo = (a, b) => Object.assign(a, b)
+export const foo = (a, b) => Object.assign(a, b);
 ```
 
 被编译成了：
@@ -141,35 +141,35 @@ yarn add babel-runtime
 首先需要安装开发时的依赖 `babel-plugin-transform-runtime`。同时还需要安装生产环境的依赖 `babel-runtime`。是否要在生产环境也依赖它取决于你发布代码的方式，简单点直接放在 dependency 里总没错。一切就绪，编译时它会自动引入你用到的方法。但自动就意味着不一定精确：
 
 ```javascript
-export const foo = (a, b) => Object.assign(a, b)
+export const foo = (a, b) => Object.assign(a, b);
 
 export const bar = (a, b) => {
-  const o = Object
-  const c = [1, 2, 3].includes(3)
-  return c && o.assign(a, b)
-}
+  const o = Object;
+  const c = [1, 2, 3].includes(3);
+  return c && o.assign(a, b);
+};
 ```
 
 会编译成：
 
 ```javascript
-var _assign = __webpack_require__(214)
+var _assign = __webpack_require__(214);
 
-var _assign2 = _interopRequireDefault(_assign)
+var _assign2 = _interopRequireDefault(_assign);
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj }
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 var foo = (exports.foo = function foo(a, b) {
-  return (0, _assign2.default)(a, b)
-})
+  return (0, _assign2.default)(a, b);
+});
 
 var bar = (exports.bar = function bar(a, b) {
-  var o = Object
-  var c = [1, 2, 3].includes(3)
-  return c && o.assign(a, b)
-})
+  var o = Object;
+  var c = [1, 2, 3].includes(3);
+  return c && o.assign(a, b);
+});
 ```
 
 foo 中的 assign 会被替换成 require 来的方法，而 bar 中这样非直接调用的方式则无能为力了。同时，因为 babel-plugin-transform-runtime 依然不是全局生效的，因此实例化的对象方法则不能被 polyfill，比如 `[1,2,3].includes` 这样依赖于全局 `Array.prototype.includes` 的调用依然无法使用。
@@ -179,9 +179,9 @@ foo 中的 assign 会被替换成 require 来的方法，而 bar 中这样非直
 上面两种 polyfill 方案共有的缺陷在于作用域。因此 babel 直接提供了通过改变全局来兼容 es2015 所有方法的 [babel-polyfill](https://babeljs.io/docs/usage/polyfill/)，安装 `babel-polyfill` 后你只需要在所有代码的最前面加一句 `import 'babel-polyfill'` 便可引入它，如果使用了 webpack 也可以直接在 entry 中添加 babel-polyfill 的入口。
 
 ```javascript
-import "babel-polyfill"
+import 'babel-polyfill';
 
-export const foo = (a, b) => Object.assign(a, b)
+export const foo = (a, b) => Object.assign(a, b);
 ```
 
 加入 babel-polyfill 后，打包好的 pollyfill.js 一下子增加到了 251kb（未压缩），（建议感兴趣的同学把代码拉下来运行一下，之后提到的所有方式也都可以看到打包结果）搜索一下 polyfill.js 不难找到这样的全局修改：

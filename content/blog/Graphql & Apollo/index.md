@@ -1,10 +1,10 @@
 ---
 title: 还在用 Redux，要不要试试 GraphQL & Apollo？
-date: "2018-03-07"
+date: '2018-03-07'
 description: 前段时间刷 Twitter 的时候看到大 V 纷纷提到 Apollo，预测它将在 2018 年崛起。正巧碰上有使用 GraphQL 的机会，在大概翻了下 Apollo 的文档之后，我下定决心在新的前端项目里尝试下抛开已经熟悉的 Redux，完全使用 Apollo 来写数据层。一个月后的现在，我必须出来好好赞美下这位“太阳神”了。
 ---
 
-![clipboard.png](/img/bV48Lu)
+![cover](./cover.jpeg)
 
 前段时间刷 Twitter 的时候看到大 V 纷纷提到 Apollo，预测它将在 2018 年崛起。正巧碰上有使用 GraphQL 的机会，在大概翻了下 Apollo 的文档之后，我下定决心在新的前端项目里尝试下抛开已经熟悉的 Redux，完全使用 Apollo 来写数据层。一个月后的现在，我必须出来好好赞美下这位“太阳神”了。
 
@@ -16,7 +16,7 @@ description: 前段时间刷 Twitter 的时候看到大 V 纷纷提到 Apollo，
 
 提到前端数据管理，最先想到的就是 Redux，我想很多人都体验过对 Redux 从陌生到熟悉的各个阶段，大致应该是这样的：
 
-![clipboard.png](/img/bV48LC)
+![Redux](./redux.jpg)
 
 - 开始：Facebook 设计的 Flux 架构，很厉害的样子，大家都在用那我也用吧
 - 半年：数据管理变的清晰些，终于不用在组件里来回混乱的 setState 了
@@ -30,7 +30,7 @@ description: 前段时间刷 Twitter 的时候看到大 V 纷纷提到 Apollo，
 
 让我们直接以一个真实的场景作为例子吧：
 
-![clipboard.png](/img/bV48LJ)
+![Example](./example.jpg)
 
 这是一个很常见的评论列表，拿到需求后我们就开始写我们的 `<Comments />` 组件了，在 Redux 的范式下，我们难免要按照这个逻辑来写：
 
@@ -55,7 +55,7 @@ description: 前段时间刷 Twitter 的时候看到大 V 纷纷提到 Apollo，
 那么在 Apollo 的世界里是什么样的呢？
 
 ```javascript
-import { graphql } from "react-apollo"
+import { graphql } from 'react-apollo';
 
 const CommentsQuery = gql`
     query Comments() {
@@ -68,14 +68,14 @@ const CommentsQuery = gql`
             }
         }
     }
-`
+`;
 
-export default graphql(CommentsQuery)(Comments)
+export default graphql(CommentsQuery)(Comments);
 ```
 
 我们使用了 `graphql`(类比到 redux 中的 connect) 作为高阶组件将一条 GraphQL 的查询语句绑定到了 Comments 组件上，然后你所有的一切就准备就绪了。这么简单么？是的，我们不再需要描述怎么在 didMount 里发送请求，怎么处理请求来的数据。而是委托 Apollo 帮我们处理这些所有事情，它会称职的帮我们在需要的时候发送请求获取数据，然后将 data 映射到 Comments 的 props 中交给我们。
 
-![clipboard.png](/img/bV48LQ)
+![apollo](./apollo.jpg)
 
 不止于此，当我们做更新操作的时候也会便捷许多。比如修改一条评论。我们定义一个 graphql 的 mutation 操作：
 
@@ -90,18 +90,18 @@ const updateComment = gql`
       gmtModified
     }
   }
-`
+`;
 
 class Comments extends React.Component {
   // ...
   onUpdateComment(id, content) {
-    this.props.updateComment(id, content)
+    this.props.updateComment(id, content);
   }
 
   // ...
 }
 
-export default graphql(updateComment)(graphql(CommentsQuery)(Comments))
+export default graphql(updateComment)(graphql(CommentsQuery)(Comments));
 ```
 
 当我们调用 updateComment 时，你就会神奇的发现，列表中的评论数据自动更新了。这是因为 apollo-client 把数据按照类型自动缓存在了 cache 中，GraphQL 节点返回的任何数据都会自动被用来更新缓存，在 UpdateComment 这个 mutation 中，我们定义了它的返回值，一条类型为 Comment 的新修改评论，并且指定了需要接受的字段，`content` 和 `gmtModified`。这样，apollo-client 就会自动通过 id 和类型去更新缓存中的数据，从而重新渲染我们的列表。
@@ -112,20 +112,20 @@ export default graphql(updateComment)(graphql(CommentsQuery)(Comments))
 class UserItem extends React.Component {
   // ...
   onHover() {
-    const { client, id } = this.props
+    const { client, id } = this.props;
 
     client
       .query({
         query: UserQuery,
         variables: { id },
       })
-      .then(data => {
-        this.setState({ fullUserInfo: data })
-      })
+      .then((data) => {
+        this.setState({ fullUserInfo: data });
+      });
   }
 }
 
-export default withApollo(UserItem)
+export default withApollo(UserItem);
 ```
 
 幸运的是这里我们依然不需要自己考虑缓存的问题。得益于 Apollo 全局的数据缓存，当我们查询过用户 A 之后，再次查询相同 id 的数据会直接命中缓存，apollo-client 会直接 resolve 缓存中的数据，并不发送请求。这时候问题来了，假设我就是想要每次都重新查询呢？
@@ -134,8 +134,8 @@ export default withApollo(UserItem)
 client.query({
   query: UserQuery,
   variables: { id },
-  fetchPolicy: "cache-and-network",
-})
+  fetchPolicy: 'cache-and-network',
+});
 ```
 
 Apollo 给我们提供了很多策略来自定义缓存逻辑，比如默认的 `cache-first` (优先使用缓存)，这里的 `cache-and-network`（先使用缓存，同时发请求更新），以及 `cache-only` 和 `network-only`。
@@ -146,7 +146,7 @@ Apollo 给我们提供了很多策略来自定义缓存逻辑，比如默认的 
 
 看到这里，你可能会觉得 “GraphQL 很酷，Apollo 也很酷，但是我的后端是 REST，目前是与他们无缘了”。其实不然，从 Apollo Client 的 2.0 版本开始引入了 Apollo Link，理论上来说我们可以通过 GraphQL 从任何类型的数据源获取数据。
 
-![clipboard.png](/img/bV48LZ)
+![apollo2](./apollo2.jpg)
 
 “通过 GraphQL“ 意味着我们可以使用书写 GraphQL 的查询语句来获取无论是 rest api 或是 client state 中的数据，这样 Apollo Client 可以替我们管理应用中所有的数据，包括缓存和数据拼接。
 
@@ -167,7 +167,7 @@ const MIXED_QUERY = gql`
             title
         }
     }
-`
+`;
 ```
 
 在这样一个 Query 查询中，我们使用 GraphQL 的 directive 拼接了来自于 GraphQL，rest，client state 中的数据，将它们抽象在一起维护。与之类似的，我们还可以封装相应的 mutation 实现。
