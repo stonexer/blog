@@ -6,6 +6,10 @@ deckgo-highlight-code {
   margin-bottom: 48px;
 }
 
+:global :not(pre) > code[class*='language-'] {
+  padding: 0 0.2em;
+}
+
 .pageHeader {
   padding-bottom: 140px;
 }
