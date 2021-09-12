@@ -1,24 +1,24 @@
-import React from "react"
-import Particles from "react-particles-js"
+import React from 'react';
+import Particles from 'react-particles-js';
 
-import SEO from "../components/seo"
-import particlesConfig from "../utils/particlesConfig"
-import SpringCard from "../components/springCard"
+import SEO from '../components/seo';
+import particlesConfig from '../utils/particlesConfig';
+import SpringCard from '../components/springCard';
 
-import * as styles from "./index.module.css"
+import * as styles from './index.module.css';
 
 function Home() {
-  const [height, setHeight] = React.useState(2000)
+  const [height, setHeight] = React.useState(2000);
 
   React.useEffect(() => {
     if (window) {
-      setHeight(window.innerHeight)
+      setHeight(window.innerHeight);
     }
-  }, [])
+  }, []);
 
   return (
     <div className={styles.container}>
-      <SEO title="SToneX" />
+      <SEO title="Home" />
       <style>
         {`
           html, body {
@@ -30,13 +30,13 @@ function Home() {
       <Particles
         params={particlesConfig}
         height={height}
-        style={{ display: "block", transform: "translateZ(-600px)" }}
+        style={{ display: 'block', transform: 'translateZ(-600px)' }}
       />
       <div className="content">
         <SpringCard />
       </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
