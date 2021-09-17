@@ -11,6 +11,7 @@
     "@deckdeckgo/highlight-code": "^3.3.1",
     "gatsby": "^3.13.0",
     "gatsby-image": "^3.11.0",
+    "gatsby-plugin-disqus": "^1.2.3",
     "gatsby-plugin-feed": "^3.13.0",
     "gatsby-plugin-google-analytics": "^3.13.0",
     "gatsby-plugin-manifest": "^3.13.0",

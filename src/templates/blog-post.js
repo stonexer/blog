@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, graphql } from 'gatsby';
+import { Disqus } from 'gatsby-plugin-disqus';
 
-import Bio from '../components/bio';
+import { rhythm, scale } from '../utils/typography';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import { rhythm, scale } from '../utils/typography';
 
 import * as styles from './index.module.css';
 
@@ -40,6 +40,13 @@ class BlogPostTemplate extends React.Component {
             }}
           />
         </article>
+
+        <Disqus
+          config={{
+            identifier: post.id,
+            title: post.frontmatter.title,
+          }}
+        />
 
         <nav>
           <ul className={styles.footer}>
